@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pablo Pagliaricci · Software Engineer</title>
+<meta name="description" content="Software engineer building AI agents and LLM workflows in production. Python, TypeScript, Temporal, MCP, Claude Code. Buenos Aires.">
+<style>
+  :root {
+    --bg: #fbfaf8; --surface: #ffffff; --ink: #1b1d21; --muted: #5e646e; --faint: #8a909a;
+    --line: #e6e3de; --accent: #1f4e79; --accent-soft: #e8eef5; --tag: #f1efeb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121417; --surface: #191c20; --ink: #e9eaec; --muted: #a3a9b3; --faint: #7c838e;
+      --line: #2a2e34; --accent: #8db8e3; --accent-soft: #1d2834; --tag: #22262c;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121417; --surface: #191c20; --ink: #e9eaec; --muted: #a3a9b3; --faint: #7c838e;
+    --line: #2a2e34; --accent: #8db8e3; --accent-soft: #1d2834; --tag: #22262c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+         font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+
+  header { padding: 72px 0 40px; }
+  h1 { font-size: 34px; line-height: 1.15; font-weight: 700; }
+  .lead { font-size: 19px; color: var(--muted); margin-top: 12px; max-width: 640px; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 20px; font-size: 15px; }
+
+  section { padding: 28px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 13px; text-transform: uppercase; color: var(--faint); font-weight: 600; margin-bottom: 18px; }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 22px 18px; margin-bottom: 16px; }
+  .card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  h3 { font-size: 19px; line-height: 1.3; }
+  .ctx { font-size: 14px; color: var(--faint); }
+  .status { font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-soft);
+            padding: 2px 9px; border-radius: 99px; white-space: nowrap; }
+  .card p { margin-top: 10px; color: var(--muted); }
+  .card ul { margin: 10px 0 0 18px; color: var(--muted); }
+  .card li { margin-bottom: 4px; }
+  .card li strong { color: var(--ink); font-weight: 600; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .tags span { font-size: 12.5px; background: var(--tag); color: var(--muted); padding: 2px 9px; border-radius: 6px; }
+
+  .exp { display: grid; grid-template-columns: 150px 1fr; gap: 6px 20px; margin-bottom: 16px; }
+  .exp .when { color: var(--faint); font-size: 14px; padding-top: 2px; }
+  .exp .what strong { font-weight: 600; }
+  .exp .what span { color: var(--muted); }
+  @media (max-width: 560px) { .exp { grid-template-columns: 1fr; gap: 0; } h1 { font-size: 28px; } header { padding-top: 48px; } }
+
+  .stack p { color: var(--muted); margin-bottom: 6px; }
+  .stack strong { color: var(--ink); font-weight: 600; }
+  footer { padding: 28px 0 56px; border-top: 1px solid var(--line); color: var(--faint); font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Pablo Pagliaricci</h1>
+  <p class="lead">Software engineer in Buenos Aires. I build AI agents and LLM workflows that run in production, and the
+    product around them: Python, TypeScript, Temporal, MCP, Claude Code.</p>
+  <div class="links">
+    <a href="mailto:pablopagliaricci@gmail.com">pablopagliaricci@gmail.com</a>
+    <a href="https://linkedin.com/in/pablo-pagliaricci-84415b2b5">LinkedIn</a>
+    <a href="https://github.com/Pagliaricci">GitHub</a>
+    <a href="https://card-classifier.vercel.app">card-classifier.vercel.app</a>
+  </div>
+</header>
+
+<section>
+  <h2>Selected work</h2>
+
+  <article class="card">
+    <div class="card-head">
+      <h3>Document-to-risk LLM workflow</h3>
+      <span class="status">In production</span>
+    </div>
+    <div class="ctx">AI cybersecurity startup (US), platform for CISOs · via Sirius Software</div>
+    <p>Customers upload their own security documents (policies, pen tests, board decks) and the platform proposes risks
+      and initiatives for their security program, instead of someone entering them by hand.</p>
+    <ul>
+      <li><strong>Workflow on Temporal</strong> with retries and idempotent writes; an LLM step synthesizes candidates.</li>
+      <li><strong>Matching before proposing:</strong> a tiered matcher compares each candidate with existing rows and an LLM
+        adjudicator decides whether it updates a row or is new, so a second document doesn't create duplicates.</li>
+      <li><strong>Human in the loop:</strong> proposals land in a review UI where the team accepts or rejects each one.</li>
+      <li><strong>Evals in CI</strong> with labeled examples, so a prompt or model change that makes results worse fails before it ships.</li>
+    </ul>
+    <div class="tags"><span>Python</span><span>TypeScript</span><span>Temporal</span><span>PostgreSQL</span><span>BAML</span><span>Evals</span></div>
+  </article>
+
+  <article class="card">
+    <div class="card-head">
+      <h3>Bug-triage agent with Claude Code</h3>
+      <span class="status">In daily use</span>
+    </div>
+    <div class="ctx">Same team</div>
+    <p>An agent that goes through the bug backlog every day, posts a proposed fix in Slack, and opens a pull request with
+      tests only after a teammate approves it.</p>
+    <ul>
+      <li>Runs on Claude Code; the same steps every day, from reading the bug to a tested patch.</li>
+      <li>The approval step keeps the PR queue clean: the agent proposes, a person decides.</li>
+    </ul>
+    <div class="tags"><span>Claude Code</span><span>Slack</span><span>GitHub</span><span>Agents</span></div>
+  </article>
+
+  <article class="card">
+    <div class="card-head">
+      <h3>Construction-management platform</h3>
+      <span class="status">In production</span>
+    </div>
+    <div class="ctx">Arquinering, construction and real-estate company in Buenos Aires · freelance, team of three</div>
+    <p>An internal platform that replaced spreadsheets for running construction projects: budgets, cost control, progress
+      billing, purchasing, labor and planning. The site and finance teams use it every day.</p>
+    <ul>
+      <li><strong>Started from the process:</strong> I sat down with the site and finance teams to map how they budget, buy and bill before writing code.</li>
+      <li><strong>Safe migration:</strong> an ETL moved the historical data into PostgreSQL, and golden tests check that the new calculation engine matches the old one.</li>
+      <li><strong>AI features:</strong> an assistant that answers questions about project data through a streaming tool-use loop on the Claude API, AI-written project reports, and reading invoices from photos.</li>
+      <li>Separate dev and production environments, end-to-end tests with Playwright.</li>
+    </ul>
+    <div class="tags"><span>Next.js</span><span>React</span><span>TypeScript</span><span>PostgreSQL</span><span>Drizzle</span><span>Claude API</span><span>Vercel</span><span>Playwright</span></div>
+  </article>
+
+    <article class="card">
+    <div class="card-head">
+      <h3>Voice copilot for Claude Code</h3>
+      <span class="status">Personal project · prototype</span>
+    </div>
+    <div class="ctx">iPhone app + local server</div>
+    <p>Talk to Claude Code from my phone, hands-free: an iPhone app sends voice to a small server on my Mac, which drives
+      Claude Code headless with my own subscription and reads the answer back.</p>
+    <ul>
+      <li><strong>MCP callback:</strong> the server exposes an MCP endpoint that the headless agent calls back into.</li>
+      <li>Finds and resumes existing Claude Code sessions; read-only by default.</li>
+      <li>Speech-to-text with whisper.cpp, long-polling for tasks that take longer than a request allows.</li>
+    </ul>
+    <div class="tags"><span>Node.js</span><span>SwiftUI</span><span>MCP</span><span>Claude Code</span><span>whisper.cpp</span></div>
+  </article>
+
+  <article class="card">
+    <div class="card-head">
+      <h3>PSA Card Classifier</h3>
+      <span class="status">Live demo</span>
+    </div>
+    <div class="ctx">Side project · <a href="https://card-classifier.vercel.app">card-classifier.vercel.app</a></div>
+    <p>A LangGraph agent that reads photos of graded NBA cards with Gemini, checks the PSA certification and makes the
+      collection searchable.</p>
+    <ul>
+      <li>Semantic search over text and image embeddings in Pinecone, with filters, PSA number lookup and match scores.</li>
+      <li>Parallel batch upload.</li>
+    </ul>
+    <div class="tags"><span>LangGraph</span><span>Gemini</span><span>Pinecone</span><span>Next.js</span><span>TypeScript</span></div>
+  </article>
+
+  <article class="card">
+    <div class="card-head">
+      <h3>Enterprise identity migration</h3>
+      <span class="status">In production</span>
+    </div>
+    <div class="ctx">AI cybersecurity startup (US) · via Sirius Software</div>
+    <p>Moved authentication from Firebase to WorkOS: every user migrated and each customer tenant mapped to an
+      organization, with zero downtime and no forced logouts. Then built the identity features CISOs ask for before
+      buying: SSO enforcement, mandatory MFA, in-app password management and audit logs.</p>
+    <div class="tags"><span>WorkOS</span><span>SSO</span><span>MFA</span><span>TypeScript</span><span>GraphQL</span></div>
+  </article>
+</section>
+
+<section>
+  <h2>Experience</h2>
+  <div class="exp">
+    <div class="when">Mar 2025 – now</div>
+    <div class="what"><strong>Software Engineer, Sirius Software.</strong> <span>Nov 2025 – now: AI cybersecurity startup (US).
+      Mar – Oct 2025: a hospital's C#/.NET systems, new APIs, authentication and production incidents.</span></div>
+  </div>
+  <div class="exp">
+    <div class="when">Feb 2026 – now</div>
+    <div class="what"><strong>Freelance Software Engineer, Arquinering.</strong> <span>Construction-management platform.</span></div>
+  </div>
+  <div class="exp">
+    <div class="when">Expected Dec 2026</div>
+    <div class="what"><strong>Informatics Engineering, Universidad Austral.</strong> <span>AWS Certified Solutions Architect – Associate.</span></div>
+  </div>
+</section>
+
+<section class="stack">
+  <h2>Stack</h2>
+  <p><strong>AI:</strong> LLM workflows, agents, tool calling, MCP, evals, structured outputs (BAML), LangGraph, Claude Code; Anthropic, OpenAI and Gemini APIs</p>
+  <p><strong>Backend:</strong> Python, TypeScript, Node.js, C#/.NET, FastAPI, Temporal, PostgreSQL, Redis, REST, GraphQL, queues</p>
+  <p><strong>Frontend:</strong> React, Next.js, React Native (Expo), SwiftUI</p>
+  <p><strong>Cloud:</strong> AWS, GCP, Vercel, Terraform, Docker, GitHub Actions</p>
+</section>
+
+<footer>
+  Spanish (native) · English (bilingual) · Open to remote roles and to Buenos Aires.
+</footer>
+
+</div>
+</body>
+</html>
